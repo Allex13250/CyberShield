@@ -92,6 +92,10 @@ class BiometricToggle(BaseModel):
     enabled: bool
 
 
+class ProfileUpdate(BaseModel):
+    full_name: Optional[str] = None
+
+
 class Lab(BaseModel):
     id: str
     slug: str
@@ -406,6 +410,22 @@ async def biometric_toggle(body: BiometricToggle, user=Depends(current_user)):
     return to_public_user(updated)
 
 
+@api.patch("/auth/me", response_model=UserPublic)
+async def update_profile(body: ProfileUpdate, user=Depends(current_user)):
+    updates: dict = {}
+    if body.full_name is not None:
+        name = body.full_name.strip()
+        if len(name) < 2:
+            raise HTTPException(status_code=400, detail="Name must be at least 2 characters")
+        if len(name) > 80:
+            raise HTTPException(status_code=400, detail="Name too long")
+        updates["full_name"] = name
+    if updates:
+        await db.users.update_one({"id": user["id"]}, {"$set": updates})
+    updated = await db.users.find_one({"id": user["id"]}, {"_id": 0, "password_hash": 0})
+    return to_public_user(updated)
+
+
 # -----------------------------------------------------------------------------
 # Labs
 # -----------------------------------------------------------------------------
@@ -413,10 +433,15 @@ async def biometric_toggle(body: BiometricToggle, user=Depends(current_user)):
 async def list_labs(user=Depends(current_user)):
     labs = await db.labs.find({}, {"_id": 0, "flag_hash": 0}).to_list(100)
 
-    # Attach completion status per user
+    # Attach completion status & attempts per user
     completed_ids = set()
-    async for sub in db.submissions.find({"user_id": user["id"], "correct": True}, {"_id": 0, "lab_id": 1}):
-        completed_ids.add(sub["lab_id"])
+    attempts_by_lab: dict = {}
+    async for sub in db.submissions.find(
+        {"user_id": user["id"]}, {"_id": 0, "lab_id": 1, "correct": 1}
+    ):
+        attempts_by_lab[sub["lab_id"]] = attempts_by_lab.get(sub["lab_id"], 0) + 1
+        if sub.get("correct"):
+            completed_ids.add(sub["lab_id"])
 
     instances = {}
     async for inst in db.lab_instances.find({"user_id": user["id"], "status": "running"}, {"_id": 0}):
@@ -425,9 +450,20 @@ async def list_labs(user=Depends(current_user)):
     out = []
     for lab in labs:
         inst = instances.get(lab["id"])
+        attempts = attempts_by_lab.get(lab["id"], 0)
+        completed = lab["id"] in completed_ids
+        # Progress heuristic: 1.0 if solved; else attempts/3 capped at 0.85; +0.15 if an instance is live
+        if completed:
+            progress = 1.0
+        else:
+            progress = min(attempts / 3.0, 0.85)
+            if inst:
+                progress = min(progress + 0.15, 0.9)
         out.append({
             **lab,
-            "completed": lab["id"] in completed_ids,
+            "completed": completed,
+            "attempts": attempts,
+            "progress": round(progress, 2),
             "instance": _serialize_instance(inst) if inst else None,
             "locked": lab["tier_required"] == "professional" and user.get("tier") != "professional" and not user.get("is_admin"),
         })

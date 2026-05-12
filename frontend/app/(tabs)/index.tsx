@@ -99,6 +99,28 @@ export default function LabsCatalog() {
               <Text style={styles.deployText}>{running ? "OPEN >" : "DEPLOY >"}</Text>
             </View>
           </View>
+
+          <View style={styles.progressWrap}>
+            <View style={styles.progressTrack}>
+              <View
+                style={[
+                  styles.progressFill,
+                  {
+                    width: `${Math.round((item.progress ?? 0) * 100)}%`,
+                    backgroundColor: item.completed ? colors.neonGreen : colors.cyan,
+                  },
+                ]}
+              />
+            </View>
+            <View style={styles.progressLabels}>
+              <Text style={styles.progressText}>
+                {item.completed
+                  ? "COMPLETED"
+                  : `${item.attempts ?? 0} ATTEMPT${(item.attempts ?? 0) === 1 ? "" : "S"}`}
+              </Text>
+              <Text style={styles.progressText}>{Math.round((item.progress ?? 0) * 100)}%</Text>
+            </View>
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -146,6 +168,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderWidth: 1,
     borderRadius: radius.sm,
     overflow: "hidden",
+    ...colors.cardShadow
   },
   thumbWrap: { height: 140, position: "relative", backgroundColor: "#000" },
   thumb: { width: "100%", height: "100%", opacity: 0.85 },
@@ -197,4 +220,14 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
   statusText: { color: colors.textSecondary, fontSize: 11, letterSpacing: 0.4, fontWeight: "700" },
   deployBtn: { paddingHorizontal: 12, paddingVertical: 6, borderWidth: 1, borderColor: colors.neonGreen },
   deployText: { color: colors.neonGreen, fontWeight: "800", letterSpacing: 0.4, fontSize: 12 },
+  progressWrap: { marginTop: 10 },
+  progressTrack: {
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: colors.surfaceElev,
+    overflow: "hidden",
+  },
+  progressFill: { height: "100%", borderRadius: 2 },
+  progressLabels: { flexDirection: "row", justifyContent: "space-between", marginTop: 4 },
+  progressText: { color: colors.textMuted, fontSize: 10, letterSpacing: 0.4, fontWeight: "700" },
 });

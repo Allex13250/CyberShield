@@ -119,6 +119,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     padding: spacing.lg,
     borderRadius: radius.sm,
     marginBottom: spacing.lg,
+    ...colors.cardShadow
   },
   cardTitle: { color: colors.cyan, letterSpacing: 1, fontSize: 11, fontWeight: "800", marginBottom: spacing.sm },
   cardHelp: { color: colors.textMuted, fontSize: 12, marginBottom: spacing.md },
@@ -145,6 +146,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderRadius: radius.sm,
     padding: spacing.md,
     position: "relative",
+    ...colors.cardShadow
   },
   swatchRow: { flexDirection: "row", gap: 6, marginBottom: 8 },
   swatch: { width: 18, height: 18, borderRadius: 2 },

@@ -91,6 +91,8 @@ export type Lab = {
   tier_required: "student" | "professional";
   points: number;
   completed?: boolean;
+  attempts?: number;
+  progress?: number;
   locked?: boolean;
   instance?: LabInstance | null;
 };

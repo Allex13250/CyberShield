@@ -199,6 +199,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderColor: colors.border,
     borderWidth: 1,
     borderRadius: radius.sm,
+    ...colors.cardShadow
   },
   label: { color: colors.textSecondary, fontSize: 11, letterSpacing: 1, fontWeight: "700" },
   inputRow: {

@@ -201,6 +201,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderWidth: 1,
     padding: spacing.lg,
     borderRadius: radius.sm,
+    ...colors.cardShadow
   },
   cardHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end", marginBottom: spacing.md },
   tierLabel: { color: colors.textMuted, letterSpacing: 1, fontSize: 11, fontWeight: "800" },

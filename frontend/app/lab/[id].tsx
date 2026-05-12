@@ -302,7 +302,8 @@ function ActionBtn({
 
 const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
-  heroWrap: { height: 200, position: "relative", borderRadius: radius.sm, overflow: "hidden", borderWidth: 1, borderColor: colors.border },
+  heroWrap: { height: 200, position: "relative", borderRadius: radius.sm, overflow: "hidden", borderWidth: 1, borderColor: colors.border,
+    ...colors.cardShadow },
   hero: { width: "100%", height: "100%" },
   heroOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(5,5,5,0.55)" },
   heroInfo: { position: "absolute", bottom: spacing.md, left: spacing.md, right: spacing.md },
@@ -317,6 +318,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderWidth: 1,
     padding: spacing.lg,
     borderRadius: radius.sm,
+    ...colors.cardShadow
   },
   sectionLabel: { color: colors.cyan, letterSpacing: 1, fontWeight: "800", fontSize: 11, marginBottom: spacing.sm },
   briefing: { color: colors.textPrimary, lineHeight: 22 },

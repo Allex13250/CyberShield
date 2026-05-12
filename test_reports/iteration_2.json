@@ -1,0 +1,45 @@
+{
+  "summary": "Backend regression + new-feature testing for CyberShield iteration 2. Added /app/backend/tests/test_new_features.py (8 cases) covering PATCH /api/auth/me and the new attempts/progress fields on GET /api/labs. Ran the full backend suite (36 tests = 8 new + 28 regression). 36/36 PASSED (100%). All acceptance criteria met. The previously-reported HIGH issue (GET /api/payments/status returning 500) is now fixed — the endpoint gracefully falls back to the persisted DB record when Stripe responds with a validation error, as documented in the agent-to-agent context.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [],
+    "react_native_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_new_features.py",
+    "/app/backend/tests/test_cybershield_api.py",
+    "/app/backend/tests/conftest.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "feature_verification": {
+    "PATCH /api/auth/me valid full_name => 200 + updated UserPublic": "PASS",
+    "PATCH /api/auth/me full_name='X' => 400 'Name must be at least 2 characters'": "PASS",
+    "PATCH /api/auth/me empty body => 200 + user unchanged": "PASS",
+    "PATCH /api/auth/me without Bearer => 401": "PASS",
+    "GET /api/labs items include numeric attempts (>=0) and progress (0..1)": "PASS — verified initial state (attempts=0, progress=0)",
+    "After 2 wrong flags on SQL Injection 101: attempts=2, progress≈0.67": "PASS — server returns 0.67 (min(2/3,0.85) rounded to 2dp)",
+    "After CORRECT flag on SQL Injection 101: progress=1.0 and completed=true": "PASS",
+    "Existing endpoints (login, labs/start, labs/submit-flag, payments/packages, payments/checkout, payments/status/{id})": "PASS — full regression green; previously-failing payments/status now returns 200 with graceful fallback as intended",
+    "Seeded student 'Demo Student' name restored at end of run": "PASS — explicit cleanup test PATCHes back to 'Demo Student'"
+  },
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py /api/payments/status now has the documented try/except fallback around stripe.get_checkout_status — looks correct and matches the intent stated in the agent-to-agent context.",
+    "ProfileUpdate model accepts only full_name; bio/avatar etc. can be added later without breaking the current schema (Optional, defaults to None).",
+    "Progress heuristic formula round(min(attempts/3, 0.85), 2) is straightforward and matches the spec; the +0.15 boost when an instance is live caps at 0.9 which is good (still < 1.0 reserved for solved).",
+    "server.py is now ~825 lines — over the 700-line guideline. Consider splitting into routers/* (auth, labs, payments, metrics) before adding more features."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_new_features.py (new — 8 tests for iteration-2 features)"
+  ],
+  "success_rate": {"backend": "100% (36/36)", "frontend": "not tested (backend only)"},
+  "seed_data_creation": "Each run registers one TEST_progress_<uuid>@example.com user (used to assert clean attempts/progress state). Seeded student name is restored to 'Demo Student' by the final cleanup test. Cheap rows, not cleaned up.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All backend features verified end-to-end at 100%. Use `cd /app/backend && python -m pytest tests/ -v --junitxml=/app/test_reports/pytest/pytest_results.xml` to re-run. Public URL comes from EXPO_PUBLIC_BACKEND_URL in /app/frontend/.env (conftest.py handles fallback). Frontend has NOT been tested in this iteration; main agent specified 'backend only'."
+}

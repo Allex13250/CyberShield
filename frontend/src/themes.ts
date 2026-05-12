@@ -22,6 +22,8 @@ export type ColorPalette = {
   borderActive: string;
   onPrimary: string;      // contrasting text on neonGreen buttons
   scrim: string;          // overlay over hero images
+  cardShadow: object;     // RN shadow props for elevated cards
+  avatarPalette: string[]; // 5 hues used by gradient avatars
 };
 
 export type ThemeMode = "light" | "dark";
@@ -75,6 +77,17 @@ const buildPalette = (input: Input, mode: ThemeMode): ColorPalette => {
   // Use primary for section labels instead of bright accent (more readable on light)
   const sectionAccent = mode === "light" && luminance(a) > 0.5 ? input.primary : input.accent;
 
+  const cardShadow =
+    mode === "light"
+      ? {
+          shadowColor: "#1A1F2E",
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.08,
+          shadowRadius: 18,
+          elevation: 3,
+        }
+      : {};
+
   return {
     bg: input.background,
     surface: mix(b, t, mode === "light" ? 0.025 : 0.04),
@@ -96,6 +109,8 @@ const buildPalette = (input: Input, mode: ThemeMode): ColorPalette => {
     borderActive: input.primary,
     onPrimary,
     scrim: mode === "dark" ? "rgba(5, 5, 5, 0.55)" : "rgba(0, 0, 0, 0.35)",
+    cardShadow,
+    avatarPalette: [input.primary, input.accent, input.secondary, mix(p, a, 0.5), mix(p, t, 0.6)],
   };
 };
 

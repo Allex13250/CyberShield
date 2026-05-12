@@ -170,6 +170,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderLeftWidth: 3,
     padding: spacing.lg,
     borderRadius: radius.sm,
+    ...colors.cardShadow
   },
   statLabel: { color: colors.textSecondary, letterSpacing: 1, fontSize: 11, fontWeight: "700" },
   statValue: { fontSize: 26, fontWeight: "800", marginTop: 4, fontFamily: "Courier" },
@@ -180,6 +181,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderRadius: radius.sm,
     padding: spacing.lg,
     marginBottom: spacing.lg,
+    ...colors.cardShadow
   },
   cardTitle: { color: colors.cyan, fontSize: 11, letterSpacing: 1, fontWeight: "800", marginBottom: spacing.md },
   chartWrap: { backgroundColor: "#000", padding: spacing.sm, borderTopWidth: 1, borderTopColor: colors.neonGreen },
