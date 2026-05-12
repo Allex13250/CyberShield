@@ -1,0 +1,44 @@
+{
+  "summary": "First backend testing iteration for CyberShield. Ran 28 pytest cases against the public preview URL covering auth (register/login/me/biometric), labs (list/detail/start/stop/reset/flag submission/tier-gating), metrics, analytics, payments (packages/checkout/status), and unauthenticated rejection. 27/28 passed (96.4%). Only failure: GET /api/payments/status/{session_id} returns HTTP 500 due to a Pydantic validation error inside the emergentintegrations Stripe library (it cannot coerce a StripeObject into the dict-typed `metadata` field of CheckoutStatusResponse). This violates the explicit acceptance criterion 'does not crash'. All other functionality (auth, JWT enforcement, lab tier-locking, simulated container lifecycle, flag hashing/scoring, simulated metrics, leaderboard, Stripe checkout-session creation, server-side price catalog enforcement) is working as specified.",
+  "backend_issues": {
+    "critical": [
+      {
+        "endpoint": "GET /api/payments/status/{session_id}",
+        "issue": "Returns 500 Internal Server Error. emergentintegrations.payments.stripe.checkout.get_checkout_status raises CheckoutError because Pydantic CheckoutStatusResponse.metadata expects a dict but receives a StripeObject. Trace: server.py:715 -> emergentintegrations/payments/stripe/checkout.py:204. Endpoint should not crash even when Stripe returns metadata wrapped in a StripeObject.",
+        "priority": "HIGH"
+      }
+    ],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [],
+    "react_native_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/conftest.py",
+    "/app/backend/tests/test_cybershield_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Harden GET /api/payments/status/{session_id}: wrap stripe.get_checkout_status() in try/except CheckoutError, and either (a) fall back to the persisted payment_transactions record (payment_status/status/amount/currency) and return that with HTTP 200, or (b) coerce session.metadata to a plain dict before the library validates it. Either approach satisfies the 'does not crash' requirement.",
+    "Optional: upgrade Expo SDK packages flagged in expo logs (expo-local-authentication 55.0.13 -> ~17.0.8, expo-secure-store 55.0.13 -> ~15.0.8, expo-web-browser 55.0.15 -> ~15.0.11) for compatibility; not blocking for backend."
+  ],
+  "critical_code_review_comments": [
+    "server.py /api/payments/status path has no error handling around third-party stripe.get_checkout_status; one library hiccup turns into a 500 to the user.",
+    "FRONTEND_URL = os.environ.get('EXPO_PUBLIC_BACKEND_URL', 'http://localhost:8081') in server.py is unused but mildly misleading — origin_url is correctly read from the request body, so consider removing the dead variable.",
+    "@app.on_event('startup'/'shutdown') is deprecated in FastAPI; consider migrating to lifespan handlers (non-blocking).",
+    "server.py is approaching ~770 lines — within the 700-line guideline but trending up. Consider splitting into routers (auth/labs/payments/metrics) before next feature add."
+  ],
+  "updated_files": [
+    "/app/backend/tests/conftest.py (new)",
+    "/app/backend/tests/test_cybershield_api.py (new)"
+  ],
+  "success_rate": {"backend": "96.4% (27/28)", "frontend": "not tested"},
+  "seed_data_creation": "Backend auto-seeds 2 users (admin@cybershield.io / student@cybershield.io) and 6 labs on startup. Tests created one TEST_register_<uuid>@example.com user per run (left in DB; cheap enough not to clean up).",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Public backend URL: EXPO_PUBLIC_BACKEND_URL=https://devsecops-academy.preview.emergentagent.com (note: frontend/.env uses EXPO_PUBLIC_BACKEND_URL, not EXPO_BACKEND_URL — conftest.py handles both). Pytest suite at /app/backend/tests/test_cybershield_api.py is reusable. Re-run with: `cd /app/backend && python -m pytest tests/test_cybershield_api.py -v --junitxml=/app/test_reports/pytest/pytest_results.xml`. Only failing test is TestPayments::test_payment_status_does_not_crash — re-run that alone after the fix.",
+  "rca_of_issue": "Reproduction: 1) POST /api/payments/checkout with {package_id:'professional_monthly', origin_url:<base>} as authenticated student -> 200 + session_id. 2) GET /api/payments/status/<session_id> -> 500. Root cause: emergentintegrations/payments/stripe/checkout.py builds CheckoutStatusResponse where `metadata` is declared as a dict in Pydantic v2, but the Stripe SDK returns a StripeObject (not a plain dict). Pydantic v2 (2.13) no longer auto-coerces; it raises 'Input should be a valid dictionary'. The library catches it and re-raises CheckoutError, which bubbles up uncaught from server.py:715. Mitigation in server code: `try: status_obj = await stripe.get_checkout_status(session_id) except Exception as e: logger.warning('stripe status fetch failed: %s', e); return {'session_id': session_id, 'payment_status': record.get('payment_status','pending'), 'status': record.get('status','open'), 'amount_total': record.get('amount_total'), 'currency': record.get('currency'), 'user': to_public_user(await db.users.find_one({'id': user['id']}, {'_id':0,'password_hash':0})).dict()}`. This satisfies the 'does not crash' spec and degrades gracefully to DB-persisted state."
+}
