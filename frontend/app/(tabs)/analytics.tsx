@@ -161,7 +161,7 @@ function Stat({ label, value, color }: { label: string; value: number; color: st
 
 const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
-  sectionLabel: { color: colors.textSecondary, fontFamily: "Courier", marginBottom: spacing.md },
+  sectionLabel: { color: colors.textSecondary, marginBottom: spacing.md },
   statsRow: { flexDirection: "row", gap: spacing.md, marginBottom: spacing.md },
   statCard: {
     flex: 1,
@@ -172,7 +172,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     padding: spacing.md,
     borderRadius: radius.sm,
   },
-  statLabel: { color: colors.textSecondary, fontSize: 10, letterSpacing: 3, fontWeight: "700" },
+  statLabel: { color: colors.textSecondary, fontSize: 10, letterSpacing: 1, fontWeight: "700" },
   statValue: { fontSize: 22, fontWeight: "800", marginTop: 4, fontFamily: "Courier" },
   card: {
     marginTop: spacing.md,
@@ -182,19 +182,19 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderRadius: radius.sm,
     padding: spacing.lg,
   },
-  cardTitle: { color: colors.cyan, fontSize: 11, letterSpacing: 3, fontWeight: "800", marginBottom: spacing.md },
-  emptyText: { color: colors.textMuted, fontFamily: "Courier", fontSize: 12 },
+  cardTitle: { color: colors.cyan, fontSize: 11, letterSpacing: 1, fontWeight: "800", marginBottom: spacing.md },
+  emptyText: { color: colors.textMuted, fontSize: 12 },
   popRow: { flexDirection: "row", paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: colors.border, alignItems: "center" },
   popTitle: { color: colors.textPrimary, fontWeight: "700" },
-  popMeta: { color: colors.textMuted, fontSize: 11, marginTop: 2, fontFamily: "Courier" },
+  popMeta: { color: colors.textMuted, fontSize: 11, marginTop: 2 },
   barTrack: { height: 4, backgroundColor: "#000", marginTop: 6, overflow: "hidden" },
   barFill: { height: "100%", backgroundColor: colors.neonGreen },
   popCount: { alignItems: "flex-end", marginLeft: spacing.md },
   popCountValue: { color: colors.neonGreen, fontSize: 18, fontWeight: "800", fontFamily: "Courier" },
-  popCountLabel: { color: colors.textMuted, fontSize: 9, letterSpacing: 2, fontWeight: "700" },
+  popCountLabel: { color: colors.textMuted, fontSize: 9, letterSpacing: 0.4, fontWeight: "700" },
   leaderRow: { flexDirection: "row", alignItems: "center", paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: colors.border },
-  rank: { color: colors.cyan, fontWeight: "800", fontFamily: "Courier", marginRight: spacing.md },
+  rank: { color: colors.cyan, fontWeight: "800", marginRight: spacing.md, fontFamily: "Courier" },
   leaderName: { color: colors.textPrimary, fontWeight: "700" },
-  leaderMeta: { color: colors.textMuted, fontSize: 11, fontFamily: "Courier", marginTop: 2 },
+  leaderMeta: { color: colors.textMuted, fontSize: 11, marginTop: 2 },
   leaderPoints: { color: colors.neonGreen, fontWeight: "800", fontFamily: "Courier" },
 });

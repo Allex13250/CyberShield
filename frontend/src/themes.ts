@@ -68,24 +68,31 @@ const buildPalette = (input: Input, mode: ThemeMode): ColorPalette => {
 
   const onPrimary = luminance(p) > 0.55 ? "#000000" : "#FFFFFF";
 
+  // Light mode: dim secondary/muted more aggressively for legibility
+  const secondaryMix = mode === "light" ? 0.55 : 0.4;
+  const mutedMix = mode === "light" ? 0.78 : 0.65;
+
+  // Use primary for section labels instead of bright accent (more readable on light)
+  const sectionAccent = mode === "light" && luminance(a) > 0.5 ? input.primary : input.accent;
+
   return {
     bg: input.background,
-    surface: mix(b, t, 0.04),
-    surfaceElev: mix(b, t, 0.08),
-    terminal: mode === "dark" ? "rgb(0, 0, 0)" : input.background,
+    surface: mix(b, t, mode === "light" ? 0.025 : 0.04),
+    surfaceElev: mix(b, t, mode === "light" ? 0.06 : 0.08),
+    terminal: mode === "dark" ? "rgb(0, 0, 0)" : mix(b, t, 0.92),
     textPrimary: input.text,
-    textSecondary: mix(t, b, 0.4),
-    textMuted: mix(t, b, 0.65),
-    terminalText: input.primary,
+    textSecondary: mix(t, b, secondaryMix),
+    textMuted: mix(t, b, mutedMix),
+    terminalText: mode === "dark" ? input.primary : "#E6EDF3",
     neonGreen: input.primary,
     neonGreenSoft: alpha(p, 0.18),
     neonGreenGlow: alpha(p, 0.35),
-    cyan: input.accent,
+    cyan: sectionAccent,
     cyanSoft: alpha(a, 0.18),
     danger: "#FF3B30",
     dangerSoft: "rgba(255, 59, 48, 0.18)",
     warning: "#FF9F0A",
-    border: mix(b, t, 0.14),
+    border: mix(b, t, mode === "light" ? 0.10 : 0.14),
     borderActive: input.primary,
     onPrimary,
     scrim: mode === "dark" ? "rgba(5, 5, 5, 0.55)" : "rgba(0, 0, 0, 0.35)",

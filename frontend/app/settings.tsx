@@ -111,7 +111,7 @@ export default function SettingsScreen() {
 
 const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
-  sectionLabel: { color: colors.textSecondary, fontFamily: "Courier", marginBottom: spacing.md },
+  sectionLabel: { color: colors.textSecondary, marginBottom: spacing.md },
   card: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
@@ -120,8 +120,8 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderRadius: radius.sm,
     marginBottom: spacing.lg,
   },
-  cardTitle: { color: colors.cyan, letterSpacing: 3, fontSize: 11, fontWeight: "800", marginBottom: spacing.sm },
-  cardHelp: { color: colors.textMuted, fontSize: 12, fontFamily: "Courier", marginBottom: spacing.md },
+  cardTitle: { color: colors.cyan, letterSpacing: 1, fontSize: 11, fontWeight: "800", marginBottom: spacing.sm },
+  cardHelp: { color: colors.textMuted, fontSize: 12, marginBottom: spacing.md },
   modeRow: { flexDirection: "row", gap: spacing.md },
   modeBtn: {
     flex: 1,
@@ -135,7 +135,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderColor: colors.border,
     backgroundColor: colors.surfaceElev,
   },
-  modeText: { fontWeight: "800", letterSpacing: 2, fontSize: 12, marginLeft: 6 },
+  modeText: { fontWeight: "800", letterSpacing: 0.4, fontSize: 12, marginLeft: 6 },
   themesGrid: { flexDirection: "row", flexWrap: "wrap", gap: spacing.md },
   themeCard: {
     width: "47%",
@@ -148,8 +148,8 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
   },
   swatchRow: { flexDirection: "row", gap: 6, marginBottom: 8 },
   swatch: { width: 18, height: 18, borderRadius: 2 },
-  themeName: { fontWeight: "800", letterSpacing: 2, fontSize: 13 },
-  themeSub: { fontSize: 11, marginTop: 4, fontFamily: "Courier" },
+  themeName: { fontWeight: "800", letterSpacing: 0.4, fontSize: 13 },
+  themeSub: { fontSize: 11, marginTop: 4 },
   activeBadge: { position: "absolute", top: 8, right: 8 },
   previewRow: { flexDirection: "row", gap: spacing.md, marginBottom: spacing.md },
   previewPrimary: {
@@ -159,7 +159,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     alignItems: "center",
     borderRadius: radius.sm,
   },
-  previewPrimaryText: { fontWeight: "800", letterSpacing: 2 },
+  previewPrimaryText: { fontWeight: "800", letterSpacing: 0.4 },
   previewOutline: {
     flex: 1,
     borderWidth: 1,
@@ -168,6 +168,6 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     alignItems: "center",
     borderRadius: radius.sm,
   },
-  previewOutlineText: { fontWeight: "800", letterSpacing: 2 },
-  previewBody: { color: colors.textSecondary, fontFamily: "Courier", lineHeight: 20 },
+  previewOutlineText: { fontWeight: "800", letterSpacing: 0.4 },
+  previewBody: { color: colors.textSecondary, lineHeight: 20 },
 });

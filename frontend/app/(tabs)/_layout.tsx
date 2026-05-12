@@ -19,10 +19,10 @@ export default function TabsLayout() {
           paddingTop: 6,
           paddingBottom: Platform.OS === "ios" ? 30 : 8,
         },
-        tabBarLabelStyle: { fontSize: 10, fontWeight: "700", letterSpacing: 1.5 },
+        tabBarLabelStyle: { fontSize: 10, fontWeight: "700", letterSpacing: 0.4 },
         headerStyle: { backgroundColor: colors.bg, borderBottomColor: colors.border, borderBottomWidth: 1 },
         headerShadowVisible: false,
-        headerTitleStyle: { color: colors.textPrimary, fontWeight: "700", letterSpacing: 2 },
+        headerTitleStyle: { color: colors.textPrimary, fontWeight: "700", letterSpacing: 0.4 },
         headerTintColor: colors.textPrimary,
       }}
     >

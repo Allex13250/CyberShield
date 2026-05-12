@@ -189,8 +189,8 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     left: spacing.xl,
     right: spacing.xl,
   },
-  brand: { fontSize: 36, color: colors.textPrimary, fontWeight: "800", letterSpacing: 4 },
-  tagline: { color: colors.textSecondary, marginTop: 6, fontFamily: "Courier" },
+  brand: { fontSize: 36, color: colors.textPrimary, fontWeight: "800", letterSpacing: 0.4 },
+  tagline: { color: colors.textSecondary, marginTop: 6 },
   formCard: {
     marginHorizontal: spacing.lg,
     marginTop: spacing.xl,
@@ -200,7 +200,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderWidth: 1,
     borderRadius: radius.sm,
   },
-  label: { color: colors.textSecondary, fontSize: 11, letterSpacing: 3, fontWeight: "700" },
+  label: { color: colors.textSecondary, fontSize: 11, letterSpacing: 1, fontWeight: "700" },
   inputRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -208,12 +208,11 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderBottomColor: colors.border,
     marginTop: 6,
   },
-  prompt: { color: colors.neonGreen, fontFamily: "Courier", marginRight: 8 },
+  prompt: { color: colors.neonGreen, marginRight: 8 },
   input: {
     flex: 1,
     color: colors.textPrimary,
     paddingVertical: 10,
-    fontFamily: "Courier",
     fontSize: 15,
   },
   primaryBtn: {
@@ -223,7 +222,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderRadius: radius.sm,
     alignItems: "center",
   },
-  primaryBtnText: { color: "#000", fontWeight: "800", letterSpacing: 2 },
+  primaryBtnText: { color: "#000", fontWeight: "800", letterSpacing: 0.4 },
   outlineBtn: {
     marginTop: spacing.md,
     paddingVertical: 12,
@@ -235,8 +234,8 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.cyan,
   },
-  outlineBtnText: { color: colors.cyan, fontWeight: "700", letterSpacing: 2, marginLeft: 8 },
-  ghostText: { color: colors.textMuted, fontFamily: "Courier", textAlign: "center" },
+  outlineBtnText: { color: colors.cyan, fontWeight: "700", letterSpacing: 0.4, marginLeft: 8 },
+  ghostText: { color: colors.textMuted, textAlign: "center" },
   muted: { color: colors.textSecondary },
-  link: { color: colors.neonGreen, fontWeight: "700", letterSpacing: 2 },
+  link: { color: colors.neonGreen, fontWeight: "700", letterSpacing: 0.4 },
 });

@@ -106,8 +106,8 @@ export default function SubscriptionSuccess() {
 
 const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg, alignItems: "center", justifyContent: "center", padding: spacing.xl },
-  title: { color: colors.textPrimary, fontSize: 24, fontWeight: "800", letterSpacing: 3, marginTop: spacing.lg },
-  sub: { color: colors.textSecondary, marginTop: 8, fontFamily: "Courier", textAlign: "center" },
+  title: { color: colors.textPrimary, fontSize: 24, fontWeight: "800", letterSpacing: 1, marginTop: spacing.lg },
+  sub: { color: colors.textSecondary, marginTop: 8, textAlign: "center" },
   primaryBtn: {
     marginTop: spacing.xl,
     backgroundColor: colors.neonGreen,
@@ -115,5 +115,5 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: radius.sm,
   },
-  primaryBtnText: { color: "#000", fontWeight: "800", letterSpacing: 2 },
+  primaryBtnText: { color: "#000", fontWeight: "800", letterSpacing: 0.4 },
 });

@@ -18,11 +18,17 @@ import { spacing, radius } from "../../src/theme";
 import { useTheme } from "../../src/themeContext";
 
 export default function ProfileTab() {
-  const { colors } = useTheme();
+  const { colors, themes, themeId, setTheme, mode, toggleMode } = useTheme();
   const styles = useMemo(() => _stylesFactory(colors), [colors]);
   const router = useRouter();
   const { user, signOut, setUser } = useAuth();
   const [busy, setBusy] = useState(false);
+
+  const cycleTheme = () => {
+    const i = themes.findIndex((t) => t.id === themeId);
+    const next = themes[(i + 1) % themes.length];
+    setTheme(next.id);
+  };
 
   if (!user) {
     return (
@@ -93,6 +99,27 @@ export default function ProfileTab() {
           <Text style={[styles.tierText, { color: isPro ? "#000" : colors.neonGreen }]}>
             {isPro ? "PROFESSIONAL" : "STUDENT"}
           </Text>
+        </View>
+
+        <View style={styles.themeQuickRow}>
+          <TouchableOpacity
+            testID="cycle-theme-btn"
+            style={styles.themeChip}
+            onPress={cycleTheme}
+          >
+            <View style={[styles.themeSwatchDot, { backgroundColor: colors.neonGreen }]} />
+            <Text style={styles.themeChipText}>
+              {(themes.find((t) => t.id === themeId)?.name) ?? "THEME"}
+            </Text>
+            <Ionicons name="shuffle" size={13} color={colors.textSecondary} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            testID="toggle-mode-btn"
+            style={styles.modeChip}
+            onPress={toggleMode}
+          >
+            <Ionicons name={mode === "dark" ? "moon" : "sunny"} size={14} color={colors.textPrimary} />
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -185,16 +212,17 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
   avatar: {
     width: 72,
     height: 72,
-    backgroundColor: "#000",
+    borderRadius: 36,
+    backgroundColor: colors.surfaceElev,
     borderColor: colors.neonGreen,
-    borderWidth: 1,
+    borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: spacing.md,
   },
-  avatarText: { color: colors.neonGreen, fontSize: 30, fontWeight: "800", fontFamily: "Courier" },
+  avatarText: { color: colors.neonGreen, fontSize: 30, fontWeight: "800" },
   name: { color: colors.textPrimary, fontSize: 20, fontWeight: "700" },
-  email: { color: colors.textSecondary, marginTop: 2, fontFamily: "Courier", fontSize: 12 },
+  email: { color: colors.textSecondary, marginTop: 2, fontSize: 12 },
   tierBadge: {
     flexDirection: "row",
     alignItems: "center",
@@ -206,7 +234,31 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
   },
   tierPro: { backgroundColor: colors.neonGreen },
   tierStudent: { borderWidth: 1, borderColor: colors.neonGreen },
-  tierText: { fontWeight: "800", letterSpacing: 2, fontSize: 11, marginLeft: 4 },
+  tierText: { fontWeight: "800", letterSpacing: 0.4, fontSize: 11, marginLeft: 4 },
+  themeQuickRow: { flexDirection: "row", alignItems: "center", marginTop: spacing.md, gap: 8 },
+  themeChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: radius.pill,
+    backgroundColor: colors.surfaceElev,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  themeSwatchDot: { width: 10, height: 10, borderRadius: radius.pill },
+  themeChipText: { color: colors.textPrimary, fontWeight: "700", letterSpacing: 0.4, fontSize: 12, marginHorizontal: 4 },
+  modeChip: {
+    width: 32,
+    height: 32,
+    borderRadius: radius.pill,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.surfaceElev,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
   upgradeCard: {
     flexDirection: "row",
     alignItems: "center",
@@ -217,7 +269,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     padding: spacing.lg,
     borderRadius: radius.sm,
   },
-  upgradeTitle: { color: colors.neonGreen, fontWeight: "800", letterSpacing: 2, fontSize: 13 },
+  upgradeTitle: { color: colors.neonGreen, fontWeight: "800", letterSpacing: 0.4, fontSize: 13 },
   upgradeDesc: { color: colors.textSecondary, fontSize: 12, marginTop: 4, lineHeight: 18 },
   section: {
     marginTop: spacing.lg,
@@ -227,13 +279,13 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderRadius: radius.sm,
     padding: spacing.lg,
   },
-  sectionTitle: { color: colors.cyan, letterSpacing: 3, fontSize: 11, fontWeight: "800", marginBottom: spacing.md },
+  sectionTitle: { color: colors.cyan, letterSpacing: 1, fontSize: 11, fontWeight: "800", marginBottom: spacing.md },
   row: { flexDirection: "row", alignItems: "center", paddingVertical: spacing.sm },
   rowTitle: { color: colors.textPrimary, fontWeight: "600" },
-  rowSubtitle: { color: colors.textMuted, fontSize: 12, marginTop: 2, fontFamily: "Courier" },
+  rowSubtitle: { color: colors.textMuted, fontSize: 12, marginTop: 2 },
   kv: { flexDirection: "row", justifyContent: "space-between", paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: colors.border },
   kvKey: { color: colors.textSecondary },
-  kvVal: { color: colors.textPrimary, fontFamily: "Courier" },
+  kvVal: { color: colors.textPrimary },
   signOutBtn: {
     marginTop: spacing.xl,
     flexDirection: "row",
@@ -245,7 +297,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     gap: 8,
     borderRadius: radius.sm,
   },
-  signOutText: { color: colors.danger, fontWeight: "800", letterSpacing: 2, marginLeft: 6 },
+  signOutText: { color: colors.danger, fontWeight: "800", letterSpacing: 0.4, marginLeft: 6 },
   settingsBtn: {
     marginTop: spacing.xl,
     flexDirection: "row",
@@ -258,5 +310,5 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderColor: colors.border,
     borderWidth: 1,
   },
-  settingsBtnText: { color: colors.textPrimary, fontWeight: "800", letterSpacing: 2, marginLeft: 6 },
+  settingsBtnText: { color: colors.textPrimary, fontWeight: "800", letterSpacing: 0.4, marginLeft: 6 },
 });

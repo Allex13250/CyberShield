@@ -133,9 +133,9 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
   scroll: { padding: spacing.lg, paddingTop: 64 },
   backBtn: { flexDirection: "row", alignItems: "center", marginBottom: spacing.lg },
-  backText: { color: colors.textPrimary, fontWeight: "700", letterSpacing: 2, marginLeft: 4 },
-  title: { color: colors.textPrimary, fontSize: 30, fontWeight: "800", letterSpacing: 3 },
-  subtitle: { color: colors.textSecondary, marginTop: 4, fontFamily: "Courier" },
+  backText: { color: colors.textPrimary, fontWeight: "700", letterSpacing: 0.4, marginLeft: 4 },
+  title: { color: colors.textPrimary, fontSize: 30, fontWeight: "800", letterSpacing: 1 },
+  subtitle: { color: colors.textSecondary, marginTop: 4 },
   card: {
     marginTop: spacing.xl,
     padding: spacing.xl,
@@ -144,7 +144,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderWidth: 1,
     borderRadius: radius.sm,
   },
-  label: { color: colors.textSecondary, fontSize: 11, letterSpacing: 3, fontWeight: "700" },
+  label: { color: colors.textSecondary, fontSize: 11, letterSpacing: 1, fontWeight: "700" },
   inputRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -152,8 +152,8 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderBottomColor: colors.border,
     marginTop: 6,
   },
-  prompt: { color: colors.neonGreen, fontFamily: "Courier", marginRight: 8 },
-  input: { flex: 1, color: colors.textPrimary, paddingVertical: 10, fontFamily: "Courier", fontSize: 15 },
+  prompt: { color: colors.neonGreen, marginRight: 8 },
+  input: { flex: 1, color: colors.textPrimary, paddingVertical: 10, fontSize: 15 },
   primaryBtn: {
     marginTop: spacing.xl,
     backgroundColor: colors.neonGreen,
@@ -161,6 +161,6 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderRadius: radius.sm,
     alignItems: "center",
   },
-  primaryBtnText: { color: "#000", fontWeight: "800", letterSpacing: 2 },
-  link: { color: colors.neonGreen, fontWeight: "700", letterSpacing: 2 },
+  primaryBtnText: { color: "#000", fontWeight: "800", letterSpacing: 0.4 },
+  link: { color: colors.neonGreen, fontWeight: "700", letterSpacing: 0.4 },
 });

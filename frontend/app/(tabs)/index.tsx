@@ -108,7 +108,7 @@ export default function LabsCatalog() {
     return (
       <View style={[styles.container, { alignItems: "center", justifyContent: "center" }]}>
         <ActivityIndicator color={colors.neonGreen} />
-        <Text style={{ color: colors.textSecondary, marginTop: 8, fontFamily: "Courier" }}>
+        <Text style={{ color: colors.textSecondary, marginTop: 8 }}>
           // fetching lab manifest...
         </Text>
       </View>
@@ -158,7 +158,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     paddingVertical: 3,
     backgroundColor: "rgba(0,0,0,0.7)",
   },
-  diffText: { fontSize: 10, fontWeight: "800", letterSpacing: 2, fontFamily: "Courier" },
+  diffText: { fontSize: 10, fontWeight: "800", letterSpacing: 0.4 },
   completedBadge: {
     position: "absolute",
     top: spacing.sm,
@@ -170,17 +170,17 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     paddingVertical: 3,
     gap: 4,
   },
-  completedText: { color: colors.neonGreen, fontSize: 10, fontWeight: "800", letterSpacing: 2, marginLeft: 4 },
+  completedText: { color: colors.neonGreen, fontSize: 10, fontWeight: "800", letterSpacing: 0.4, marginLeft: 4 },
   lockedOverlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "rgba(5,5,5,0.75)",
     alignItems: "center",
     justifyContent: "center",
   },
-  lockedText: { color: colors.warning, marginTop: 6, fontWeight: "800", letterSpacing: 2, fontSize: 11 },
+  lockedText: { color: colors.warning, marginTop: 6, fontWeight: "800", letterSpacing: 0.4, fontSize: 11 },
   body: { padding: spacing.lg, borderTopWidth: 1, borderTopColor: colors.border },
-  category: { color: colors.cyan, fontSize: 11, letterSpacing: 3, fontWeight: "800" },
-  points: { color: colors.textSecondary, fontSize: 11, letterSpacing: 2, fontFamily: "Courier" },
+  category: { color: colors.cyan, fontSize: 11, letterSpacing: 1, fontWeight: "800" },
+  points: { color: colors.textSecondary, fontSize: 11, letterSpacing: 0.4 },
   title: { color: colors.textPrimary, fontSize: 18, fontWeight: "700", marginTop: 6 },
   desc: { color: colors.textSecondary, fontSize: 13, marginTop: 4, lineHeight: 18 },
   statusRow: {
@@ -194,7 +194,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
   },
   statusLeft: { flexDirection: "row", alignItems: "center" },
   statusDot: { width: 8, height: 8, borderRadius: 4, marginRight: 8 },
-  statusText: { color: colors.textSecondary, fontSize: 11, letterSpacing: 2, fontWeight: "700" },
+  statusText: { color: colors.textSecondary, fontSize: 11, letterSpacing: 0.4, fontWeight: "700" },
   deployBtn: { paddingHorizontal: 12, paddingVertical: 6, borderWidth: 1, borderColor: colors.neonGreen },
-  deployText: { color: colors.neonGreen, fontWeight: "800", letterSpacing: 2, fontSize: 12 },
+  deployText: { color: colors.neonGreen, fontWeight: "800", letterSpacing: 0.4, fontSize: 12 },
 });

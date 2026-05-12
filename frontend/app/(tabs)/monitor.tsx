@@ -141,7 +141,7 @@ function Legend({ color, label }: { color: string; label: string }) {
   return (
     <View style={{ flexDirection: "row", alignItems: "center", marginRight: spacing.lg }}>
       <View style={{ width: 12, height: 2, backgroundColor: color, marginRight: 6 }} />
-      <Text style={{ color: colors.textSecondary, fontSize: 11, letterSpacing: 2, fontWeight: "700" }}>{label}</Text>
+      <Text style={{ color: colors.textSecondary, fontSize: 11, letterSpacing: 0.4, fontWeight: "700" }}>{label}</Text>
     </View>
   );
 }
@@ -159,7 +159,7 @@ function KV({ k, v, testID }: { k: string; v: string; testID?: string }) {
 
 const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
-  sectionLabel: { color: colors.textSecondary, fontFamily: "Courier", marginBottom: spacing.md },
+  sectionLabel: { color: colors.textSecondary, marginBottom: spacing.md },
   statsGrid: { flexDirection: "row", flexWrap: "wrap", gap: spacing.md, marginBottom: spacing.lg },
   statCard: {
     flexGrow: 1,
@@ -171,7 +171,7 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     padding: spacing.lg,
     borderRadius: radius.sm,
   },
-  statLabel: { color: colors.textSecondary, letterSpacing: 3, fontSize: 11, fontWeight: "700" },
+  statLabel: { color: colors.textSecondary, letterSpacing: 1, fontSize: 11, fontWeight: "700" },
   statValue: { fontSize: 26, fontWeight: "800", marginTop: 4, fontFamily: "Courier" },
   card: {
     backgroundColor: colors.surface,
@@ -181,10 +181,10 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     padding: spacing.lg,
     marginBottom: spacing.lg,
   },
-  cardTitle: { color: colors.cyan, fontSize: 11, letterSpacing: 3, fontWeight: "800", marginBottom: spacing.md },
+  cardTitle: { color: colors.cyan, fontSize: 11, letterSpacing: 1, fontWeight: "800", marginBottom: spacing.md },
   chartWrap: { backgroundColor: "#000", padding: spacing.sm, borderTopWidth: 1, borderTopColor: colors.neonGreen },
   legendRow: { flexDirection: "row", marginTop: spacing.md },
   kv: { flexDirection: "row", justifyContent: "space-between", paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: colors.border },
   kvKey: { color: colors.textSecondary },
-  kvVal: { color: colors.textPrimary, fontFamily: "Courier" },
+  kvVal: { color: colors.textPrimary, fontFamily: "Courier", fontSize: 12 },
 });

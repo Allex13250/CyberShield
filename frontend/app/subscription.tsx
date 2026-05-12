@@ -192,8 +192,8 @@ function FeatureRow({ text, pro }: { text: string; pro?: boolean }) {
 
 const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
-  title: { color: colors.textPrimary, fontSize: 26, fontWeight: "800", letterSpacing: 3 },
-  subtitle: { color: colors.textSecondary, fontFamily: "Courier", marginTop: 4 },
+  title: { color: colors.textPrimary, fontSize: 26, fontWeight: "800", letterSpacing: 1 },
+  subtitle: { color: colors.textSecondary, marginTop: 4 },
   card: {
     marginTop: spacing.lg,
     backgroundColor: colors.surface,
@@ -203,9 +203,9 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     borderRadius: radius.sm,
   },
   cardHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end", marginBottom: spacing.md },
-  tierLabel: { color: colors.textMuted, letterSpacing: 3, fontSize: 11, fontWeight: "800" },
-  tierName: { color: colors.textPrimary, fontSize: 22, fontWeight: "800", letterSpacing: 2, marginTop: 4 },
-  price: { color: colors.textPrimary, fontSize: 22, fontWeight: "800", fontFamily: "Courier" },
+  tierLabel: { color: colors.textMuted, letterSpacing: 1, fontSize: 11, fontWeight: "800" },
+  tierName: { color: colors.textPrimary, fontSize: 22, fontWeight: "800", letterSpacing: 0.4, marginTop: 4 },
+  price: { color: colors.textPrimary, fontSize: 22, fontWeight: "800" },
   feature: { flexDirection: "row", alignItems: "center", paddingVertical: 6, gap: 8 },
   featureText: { color: colors.textSecondary, fontSize: 13, marginLeft: 6 },
   checkoutBtn: {
@@ -218,8 +218,8 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     gap: 8,
     borderRadius: radius.sm,
   },
-  checkoutBtnText: { color: "#000", fontWeight: "800", letterSpacing: 2, marginLeft: 6 },
-  disclaimer: { color: colors.textMuted, fontSize: 11, marginTop: spacing.md, fontFamily: "Courier", textAlign: "center" },
+  checkoutBtnText: { color: "#000", fontWeight: "800", letterSpacing: 0.4, marginLeft: 6 },
+  disclaimer: { color: colors.textMuted, fontSize: 11, marginTop: spacing.md, textAlign: "center" },
   statusPill: { paddingHorizontal: 10, paddingVertical: 4, borderWidth: 1 },
-  statusPillText: { fontWeight: "800", letterSpacing: 2, fontSize: 11 },
+  statusPillText: { fontWeight: "800", letterSpacing: 0.4, fontSize: 11 },
 });

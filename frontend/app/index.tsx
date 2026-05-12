@@ -36,11 +36,10 @@ const _stylesFactory = (colors: any) => StyleSheet.create({
     color: colors.textPrimary,
     fontSize: 32,
     fontWeight: "800",
-    letterSpacing: 4,
+    letterSpacing: 0.4,
   },
   sub: {
     color: colors.textSecondary,
-    fontFamily: "Courier",
     marginTop: 10,
   },
 });
