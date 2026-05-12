@@ -712,7 +712,19 @@ async def payment_status(session_id: str, request: Request, user=Depends(current
         raise HTTPException(status_code=403, detail="Not your transaction")
 
     stripe = get_stripe(request)
-    status_obj = await stripe.get_checkout_status(session_id)
+    try:
+        status_obj = await stripe.get_checkout_status(session_id)
+    except Exception as e:
+        logger.warning("Stripe status fetch failed for %s: %s", session_id, e)
+        user_after = await db.users.find_one({"id": user["id"]}, {"_id": 0, "password_hash": 0})
+        return {
+            "session_id": session_id,
+            "payment_status": record.get("payment_status", "pending"),
+            "status": record.get("status", "open"),
+            "amount_total": record.get("amount_total"),
+            "currency": record.get("currency"),
+            "user": to_public_user(user_after).dict(),
+        }
 
     update = {
         "payment_status": status_obj.payment_status,
