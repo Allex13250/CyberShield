@@ -1,0 +1,146 @@
+{
+  "project_name": "CyberShield",
+  "domain": "Cybersecurity Education & Labs",
+  "design_system": {
+    "theme": "Dark",
+    "archetype": "7 (Electric & Neon - Tactical Hacker Variant)",
+    "emotional_tone": "Elite, Technical, Mysterious, Urgent, Command-Center",
+    "colors": {
+      "background": {
+        "base": "#050505",
+        "surface": "#0D1117",
+        "surface_elevated": "#161B22",
+        "terminal": "#000000"
+      },
+      "text": {
+        "primary": "#E6EDF3",
+        "secondary": "#8B949E",
+        "muted": "#484F58",
+        "terminal": "#00FF41"
+      },
+      "accents": {
+        "primary": "#00FF41",
+        "primary_glow": "rgba(0, 255, 65, 0.4)",
+        "secondary": "#00F0FF",
+        "secondary_glow": "rgba(0, 240, 255, 0.4)",
+        "danger": "#FF3B30",
+        "danger_glow": "rgba(255, 59, 48, 0.4)",
+        "warning": "#FF9F0A"
+      },
+      "borders": {
+        "default": "#21262D",
+        "active": "#00FF41"
+      }
+    },
+    "typography": {
+      "rules": "High contrast typography. Use geometric sans for readability and strong monospace for all data, metrics, code, and flags. DO NOT use generic fonts like Inter or Roboto for headings.",
+      "fonts": {
+        "headings": "Outfit",
+        "body": "IBM Plex Sans",
+        "monospace": "JetBrains Mono"
+      },
+      "hierarchy": {
+        "h1": {
+          "size": "text-4xl",
+          "weight": "font-bold",
+          "tracking": "tracking-tight"
+        },
+        "h2": {
+          "size": "text-2xl",
+          "weight": "font-bold",
+          "tracking": "tracking-tight"
+        },
+        "h3": {
+          "size": "text-xl",
+          "weight": "font-semibold",
+          "tracking": "normal"
+        },
+        "body": {
+          "size": "text-base",
+          "weight": "font-normal",
+          "tracking": "normal"
+        },
+        "terminal_output": {
+          "size": "text-sm",
+          "weight": "font-medium",
+          "font": "font-mono",
+          "tracking": "tracking-tight"
+        },
+        "labels_badges": {
+          "size": "text-xs",
+          "weight": "font-bold",
+          "tracking": "tracking-[0.2em]",
+          "text_transform": "uppercase"
+        }
+      }
+    },
+    "spacing_and_layout": {
+      "strategy": "The 'Control Room' Grid (Density, Data Correlation, Scanability).",
+      "padding_scale": "p-2, p-4, p-6, p-8",
+      "gap_scale": "gap-2, gap-4, gap-6",
+      "border_radius": "Rounded-sm (2px to 4px max) to maintain a sharp, technical, and brutalist hacker aesthetic. NO pill-shaped buttons unless it is a premium tier badge.",
+      "alignment": "Left-align dense text and terminal logs. Center-align empty states and primary action dialogs."
+    },
+    "surface_strategies": {
+      "cards": "Flat background (#0D1117) with 1px solid border (#21262D). On hover/active, the border shifts to neon green (#00FF41) or cyan (#00F0FF) with a subtle drop-shadow glow.",
+      "terminal_panels": "Pure black (#000000) background, no border, with a 1px top border of neon green indicating 'active connection'.",
+      "buttons": {
+        "primary": "Solid neon green (#00FF41) background, black text, sharp corners. For danger actions (Stop Lab), use neon red (#FF3B30).",
+        "outline": "Transparent background, 1px neon border, neon text.",
+        "ghost": "Transparent background, muted text, changes to neon text on hover."
+      },
+      "inputs": "Terminal style. Transparent background, bottom border only (1px solid #484F58), which glows cyan on focus. Prefix with 'root@cybershield:~# ' for the flag submission input."
+    },
+    "motion_and_interactions": {
+      "status_indicators": "Pulsing animation (opacity 0.4 to 1) for live server statuses.",
+      "terminal_cursor": "Blinking square block (animate-pulse) at the end of terminal logs.",
+      "page_transitions": "Fast, rigid opacity fades. No bouncy spring animations. It should feel like a lightning-fast CLI execution.",
+      "charts": "Draw-in line animation for network/CPU charts upon loading."
+    },
+    "components": {
+      "lab_catalog_card": "Vertical layout. Thumbnail image on top. Monospace difficulty badge (e.g., [ HARD ]) floating top-right. Title, brief description, and a 'Deploy' button.",
+      "server_monitor_chart": "Recharts line chart. Black background, neon green stroke for CPU, cyan stroke for RAM. Hide axes lines, show only horizontal grid lines (dashed, low opacity).",
+      "flag_input": "Full width monospace input. Styled to look like a command line interface. Label: 'SUBMIT_FLAG'.",
+      "bottom_tab_navigator": "Mobile-first bottom tabs. Dark background, unselected icons in muted gray (#8B949E). Selected icon glows with primary neon color (#00FF41) with a 2px top border on the active tab."
+    },
+    "media": {
+      "rules": "Use the provided image URLs exactly. Do not use placeholders. If an image is missing, use a solid dark background with a monospace icon.",
+      "images": {
+        "cyber_background_1": {
+          "url": "https://static.prod-images.emergentagent.com/jobs/bab84aa9-5bbd-4317-baf4-40788a8ec1c6/images/a36df35f73d085b422c0ce5ed19260c9f7f2938db3916ed30e74c4a3c72a08e4.png",
+          "description": "Abstract neon green data nodes on deep black. Use for Login/Auth screen background or Profile hero."
+        },
+        "lab_thumbnail_apache": {
+          "url": "https://static.prod-images.emergentagent.com/jobs/bab84aa9-5bbd-4317-baf4-40788a8ec1c6/images/0004a991947288b5b1dc4931af10e6269a874e6c1e11454ad7d93b1073c1554e.png",
+          "description": "Glowing yellow/amber server rack. Use as thumbnail for Outdated Apache or Server configuration labs."
+        },
+        "lab_thumbnail_sql": {
+          "url": "https://static.prod-images.emergentagent.com/jobs/bab84aa9-5bbd-4317-baf4-40788a8ec1c6/images/067d2ead7e4e065842073b22c3dd9d02b040cb2ef44df8dfc996edcb3dc75546.png",
+          "description": "Neon red glowing database icon. Use as thumbnail for SQL Injection or database vulnerability labs."
+        },
+        "hacker_code_screen_1": {
+          "url": "https://images.unsplash.com/photo-1592609930961-219235eded71?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA4Mzl8MHwxfHNlYXJjaHw0fHxoYWNrZXIlMjB0ZXJtaW5hbCUyMGNvZGV8ZW58MHx8fHwxNzc4NTc4MDc2fDA&ixlib=rb-4.1.0&q=85",
+          "description": "Black flat screen computer monitor with code. Use as a fallback for other lab thumbnails like XSS."
+        },
+        "hacker_code_screen_2": {
+          "url": "https://images.pexels.com/photos/207580/pexels-photo-207580.jpeg",
+          "description": "Close-up colorful terminal code. Use for the Analytics dashboard hero or generic lab backgrounds."
+        }
+      },
+      "icons": "Use Phosphor Icons (for dense dashboards) or generic React Native vector icons (Feather/Ionicons) in mobile. Prefer sharp, geometric icon variants."
+    },
+    "accessibility_and_testing": {
+      "contrast": "Ensure all neon text on black backgrounds meets 4.5:1 ratio. Avoid pure black text on neon green if the green is too dark; use very light green or dark text on bright green buttons.",
+      "testing_attributes": "All interactive elements (buttons, inputs, tabs, lab cards) MUST include a 'data-testid' attribute (e.g., 'data-testid=\"submit-flag-button\"')."
+    },
+    "instructions_to_main_agent": [
+      "Implement the UI using a dark mobile-first layout. If using React Native, map the hex colors directly to StyleSheet or NativeWind classes.",
+      "Do NOT use pure white backgrounds anywhere.",
+      "For the Terminal/Logs view, implement a ScrollView with inverted colors (pure black bg, green text, monospace font).",
+      "Use the provided image URLs for the lab catalog cards and login background.",
+      "Ensure the bottom navigation uses the active/inactive color states defined in components.bottom_tab_navigator.",
+      "The 'Start Lab' button should be highly prominent (neon green fill), while 'Stop Lab' should be neon red.",
+      "Apply the 'data-testid' attribute to all actionable UI elements."
+    ]
+  }
+}
