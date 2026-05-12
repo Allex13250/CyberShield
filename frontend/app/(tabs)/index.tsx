@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   View,
   Text,
@@ -12,9 +12,10 @@ import {
 import { useFocusEffect, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { api, Lab } from "../../src/api";
-import { colors, spacing, radius } from "../../src/theme";
+import { spacing, radius } from "../../src/theme";
+import { useTheme } from "../../src/themeContext";
 
-function difficultyColor(d: string) {
+function difficultyColor(colors: any, d: string) {
   if (d === "easy") return colors.neonGreen;
   if (d === "medium") return colors.warning;
   return colors.danger;
@@ -22,6 +23,8 @@ function difficultyColor(d: string) {
 
 export default function LabsCatalog() {
   const router = useRouter();
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   const [labs, setLabs] = useState<Lab[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -53,8 +56,8 @@ export default function LabsCatalog() {
       >
         <View style={styles.thumbWrap}>
           <Image source={{ uri: item.thumbnail }} style={styles.thumb} resizeMode="cover" />
-          <View style={[styles.diffBadge, { borderColor: difficultyColor(item.difficulty) }]}>
-            <Text style={[styles.diffText, { color: difficultyColor(item.difficulty) }]}>
+          <View style={[styles.diffBadge, { borderColor: difficultyColor(colors, item.difficulty) }]}>
+            <Text style={[styles.diffText, { color: difficultyColor(colors, item.difficulty) }]}>
               [ {item.difficulty.toUpperCase()} ]
             </Text>
           </View>
@@ -135,7 +138,7 @@ export default function LabsCatalog() {
   );
 }
 
-const styles = StyleSheet.create({
+const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
   card: {
     backgroundColor: colors.surface,

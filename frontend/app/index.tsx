@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { View, ActivityIndicator, StyleSheet, Text } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuth } from "../src/auth";
-import { colors } from "../src/theme";
+import { useTheme } from "../src/themeContext";
 
 export default function Splash() {
   const router = useRouter();
   const { user, loading } = useAuth();
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
 
   useEffect(() => {
     if (loading) return;
@@ -23,7 +25,7 @@ export default function Splash() {
   );
 }
 
-const styles = StyleSheet.create({
+const _stylesFactory = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.bg,

@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useMemo, useCallback, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { api } from "../../src/api";
-import { colors, spacing, radius } from "../../src/theme";
+import { spacing, radius } from "../../src/theme";
+import { useTheme } from "../../src/themeContext";
 
 type Row = {
   lab_id: string;
@@ -33,6 +34,8 @@ type Totals = {
 };
 
 export default function AnalyticsTab() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   const [totals, setTotals] = useState<Totals | null>(null);
   const [rows, setRows] = useState<Row[]>([]);
   const [leaderboard, setLeaderboard] = useState<LeaderRow[]>([]);
@@ -146,6 +149,8 @@ export default function AnalyticsTab() {
 }
 
 function Stat({ label, value, color }: { label: string; value: number; color: string }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   return (
     <View style={[styles.statCard, { borderTopColor: color }]}>
       <Text style={styles.statLabel}>{label}</Text>
@@ -154,7 +159,7 @@ function Stat({ label, value, color }: { label: string; value: number; color: st
   );
 }
 
-const styles = StyleSheet.create({
+const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
   sectionLabel: { color: colors.textSecondary, fontFamily: "Courier", marginBottom: spacing.md },
   statsRow: { flexDirection: "row", gap: spacing.md, marginBottom: spacing.md },

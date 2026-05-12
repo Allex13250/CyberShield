@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   View,
   Text,
@@ -14,9 +14,12 @@ import { Ionicons } from "@expo/vector-icons";
 import * as LocalAuthentication from "expo-local-authentication";
 import { useAuth } from "../../src/auth";
 import { api } from "../../src/api";
-import { colors, spacing, radius } from "../../src/theme";
+import { spacing, radius } from "../../src/theme";
+import { useTheme } from "../../src/themeContext";
 
 export default function ProfileTab() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   const router = useRouter();
   const { user, signOut, setUser } = useAuth();
   const [busy, setBusy] = useState(false);
@@ -137,6 +140,16 @@ export default function ProfileTab() {
       </View>
 
       <TouchableOpacity
+        testID="open-settings-btn"
+        style={styles.settingsBtn}
+        onPress={() => router.push("/settings")}
+      >
+        <Ionicons name="color-palette-outline" size={18} color={colors.cyan} />
+        <Text style={styles.settingsBtnText}>APPEARANCE & THEMES</Text>
+        <Ionicons name="chevron-forward" size={16} color={colors.textSecondary} style={{ marginLeft: "auto" }} />
+      </TouchableOpacity>
+
+      <TouchableOpacity
         testID="signout-btn"
         style={styles.signOutBtn}
         onPress={handleSignOut}
@@ -149,6 +162,8 @@ export default function ProfileTab() {
 }
 
 function KV({ k, v }: { k: string; v: string }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   return (
     <View style={styles.kv}>
       <Text style={styles.kvKey}>{k}</Text>
@@ -157,7 +172,7 @@ function KV({ k, v }: { k: string; v: string }) {
   );
 }
 
-const styles = StyleSheet.create({
+const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
   heroCard: {
     backgroundColor: colors.surface,
@@ -231,4 +246,17 @@ const styles = StyleSheet.create({
     borderRadius: radius.sm,
   },
   signOutText: { color: colors.danger, fontWeight: "800", letterSpacing: 2, marginLeft: 6 },
+  settingsBtn: {
+    marginTop: spacing.xl,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 14,
+    paddingHorizontal: spacing.lg,
+    gap: 10,
+    borderRadius: radius.sm,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderWidth: 1,
+  },
+  settingsBtnText: { color: colors.textPrimary, fontWeight: "800", letterSpacing: 2, marginLeft: 6 },
 });

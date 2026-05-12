@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   View,
   Text,
@@ -16,7 +16,8 @@ import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import * as LocalAuthentication from "expo-local-authentication";
 import { useAuth } from "../src/auth";
-import { colors, spacing, radius } from "../src/theme";
+import { spacing, radius } from "../src/theme";
+import { useTheme } from "../src/themeContext";
 
 const HERO =
   "https://static.prod-images.emergentagent.com/jobs/bab84aa9-5bbd-4317-baf4-40788a8ec1c6/images/a36df35f73d085b422c0ce5ed19260c9f7f2938db3916ed30e74c4a3c72a08e4.png";
@@ -24,6 +25,8 @@ const HERO =
 export default function LoginScreen() {
   const router = useRouter();
   const { signIn, user, loading: authLoading } = useAuth();
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -171,7 +174,7 @@ export default function LoginScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
   scroll: { paddingBottom: spacing.xxl },
   heroWrap: { height: 280, position: "relative", borderBottomWidth: 1, borderBottomColor: colors.border },

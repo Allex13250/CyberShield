@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useMemo, useCallback, useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -16,9 +16,12 @@ import {
 import { useLocalSearchParams, useRouter, useFocusEffect } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { api, Lab, LabInstance } from "../../src/api";
-import { colors, spacing, radius } from "../../src/theme";
+import { spacing, radius } from "../../src/theme";
+import { useTheme } from "../../src/themeContext";
 
 export default function LabDetail() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
 
@@ -282,6 +285,8 @@ export default function LabDetail() {
 function ActionBtn({
   label, color, icon, onPress, disabled, testID,
 }: { label: string; color: string; icon: any; onPress: () => void; disabled?: boolean; testID?: string }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   return (
     <TouchableOpacity
       testID={testID}
@@ -295,7 +300,7 @@ function ActionBtn({
   );
 }
 
-const styles = StyleSheet.create({
+const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
   heroWrap: { height: 200, position: "relative", borderRadius: radius.sm, overflow: "hidden", borderWidth: 1, borderColor: colors.border },
   hero: { width: "100%", height: "100%" },

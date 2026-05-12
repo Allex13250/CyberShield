@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,7 +15,8 @@ import { Ionicons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import { api } from "../src/api";
 import { useAuth } from "../src/auth";
-import { colors, spacing, radius } from "../src/theme";
+import { spacing, radius } from "../src/theme";
+import { useTheme } from "../src/themeContext";
 
 type Pkg = { id: string; amount: number; currency: string; label: string };
 
@@ -35,6 +36,8 @@ const FEATURES_PRO = [
 ];
 
 export default function SubscriptionScreen() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   const router = useRouter();
   const { user, refresh } = useAuth();
   const [packages, setPackages] = useState<Pkg[]>([]);
@@ -173,6 +176,8 @@ export default function SubscriptionScreen() {
 }
 
 function FeatureRow({ text, pro }: { text: string; pro?: boolean }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   return (
     <View style={styles.feature}>
       <Ionicons
@@ -185,7 +190,7 @@ function FeatureRow({ text, pro }: { text: string; pro?: boolean }) {
   );
 }
 
-const styles = StyleSheet.create({
+const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
   title: { color: colors.textPrimary, fontSize: 26, fontWeight: "800", letterSpacing: 3 },
   subtitle: { color: colors.textSecondary, fontFamily: "Courier", marginTop: 4 },

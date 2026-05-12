@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { api } from "../src/api";
 import { useAuth } from "../src/auth";
-import { colors, spacing, radius } from "../src/theme";
+import { spacing, radius } from "../src/theme";
+import { useTheme } from "../src/themeContext";
 
 export default function SubscriptionSuccess() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   const { session_id } = useLocalSearchParams<{ session_id?: string }>();
   const router = useRouter();
   const { refresh } = useAuth();
@@ -101,7 +104,7 @@ export default function SubscriptionSuccess() {
   );
 }
 
-const styles = StyleSheet.create({
+const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg, alignItems: "center", justifyContent: "center", padding: spacing.xl },
   title: { color: colors.textPrimary, fontSize: 24, fontWeight: "800", letterSpacing: 3, marginTop: spacing.lg },
   sub: { color: colors.textSecondary, marginTop: 8, fontFamily: "Courier", textAlign: "center" },

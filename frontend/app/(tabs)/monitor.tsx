@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import Svg, { Polyline, Line, Rect } from "react-native-svg";
 import { api, ServerMetrics } from "../../src/api";
-import { colors, spacing, radius } from "../../src/theme";
+import { spacing, radius } from "../../src/theme";
+import { useTheme } from "../../src/themeContext";
 
 const { width } = Dimensions.get("window");
 const CHART_W = width - spacing.lg * 2 - spacing.lg * 2;
@@ -29,6 +30,8 @@ function formatUptime(s: number) {
 }
 
 export default function MonitorTab() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   const [m, setM] = useState<ServerMetrics | null>(null);
 
   useEffect(() => {
@@ -122,6 +125,8 @@ export default function MonitorTab() {
 }
 
 function Stat({ label, value, color, testID }: { label: string; value: string; color: string; testID?: string }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   return (
     <View style={[styles.statCard, { borderLeftColor: color }]} testID={testID}>
       <Text style={styles.statLabel}>{label}</Text>
@@ -131,6 +136,8 @@ function Stat({ label, value, color, testID }: { label: string; value: string; c
 }
 
 function Legend({ color, label }: { color: string; label: string }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   return (
     <View style={{ flexDirection: "row", alignItems: "center", marginRight: spacing.lg }}>
       <View style={{ width: 12, height: 2, backgroundColor: color, marginRight: 6 }} />
@@ -140,6 +147,8 @@ function Legend({ color, label }: { color: string; label: string }) {
 }
 
 function KV({ k, v, testID }: { k: string; v: string; testID?: string }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => _stylesFactory(colors), [colors]);
   return (
     <View style={styles.kv} testID={testID}>
       <Text style={styles.kvKey}>{k}</Text>
@@ -148,7 +157,7 @@ function KV({ k, v, testID }: { k: string; v: string; testID?: string }) {
   );
 }
 
-const styles = StyleSheet.create({
+const _stylesFactory = (colors: any) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
   sectionLabel: { color: colors.textSecondary, fontFamily: "Courier", marginBottom: spacing.md },
   statsGrid: { flexDirection: "row", flexWrap: "wrap", gap: spacing.md, marginBottom: spacing.lg },
